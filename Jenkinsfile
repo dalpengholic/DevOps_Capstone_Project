@@ -10,6 +10,11 @@ pipeline{
             sh 'tidy -q -e index.html'}
       }
     }
+    stage('Lint Dockerfile'){
+      steps{
+        sh 'hadolint Dockerfile'
+      }
+    }
 
      stage('Upload to AWS'){
         steps{
