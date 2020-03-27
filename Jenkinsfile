@@ -2,7 +2,7 @@ pipeline{
   agent any
   stages{
     stage('Lint HTML'){
-      parallel{
+      parallel(
         steps{
           dir('blue'){
             sh 'tidy -q -e index.html'
@@ -13,7 +13,8 @@ pipeline{
             sh 'tidy -q -e index.html'
                       }	
 			       }
-		          }
+      )
+    }
 
      stage('Upload to AWS'){
         steps{
