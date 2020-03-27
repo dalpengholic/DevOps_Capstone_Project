@@ -3,14 +3,12 @@ pipeline{
   stages{
     stage('Lint HTML'){
       steps{
-        parallel(
           dir('blue'){
             sh 'tidy -q -e index.html'
 		                 }
           dir('green'){
-            sh 'tidy -q -e index.html'
-                      }	
-         ) }
+            sh 'tidy -q -e index.html'}
+      }
     }
 
      stage('Upload to AWS'){
