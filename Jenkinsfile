@@ -21,18 +21,13 @@ pipeline{
         sh '''
         lintErrors=$(stat --printf="%s"  hadolint_lint.txt)
         if [ "$lintErrors" -gt "0" ]; then
-        echo "Errors have been found, please see below"
+        echo "Error"
         cat hadolint_lint.txt
         exit 1
-    else
-        echo "There are no erros found on Dockerfile!!"
-    fi
+        else
+        echo "No error in Dockerfile!!"
+        fi
     '''
-    }
-    post {
-        always {
-            archiveArtifacts 'hadolint_lint.txt'
-        }
     }
 }  
     // stage('Lint Dockerfile'){
