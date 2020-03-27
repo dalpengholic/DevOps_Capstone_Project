@@ -3,10 +3,10 @@ pipeline{
   stages{
     stage('Lint HTML'){
       steps{
-          dir('blue'){
+          dir('Blue'){
             sh 'tidy -q -e index.html'
 		                 }
-          dir('green'){
+          dir('Green'){
             sh 'tidy -q -e index.html'}
       }
     }
