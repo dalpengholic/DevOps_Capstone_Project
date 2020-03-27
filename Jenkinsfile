@@ -10,19 +10,34 @@ pipeline{
             sh 'tidy -q -e index.html'}
       }
     }
-    stage('Lint Dockerfile'){
-      steps{
-        script{
-          docker.image('hadolint/hadolint:latest-debian').inside(){
-            sh 'hadolint ./Dockerfile | tee -a hadolint_lint.txt'
-            sh '''
-               lintErrors=$(stat --printf="%s"  hadolint_lint.txt)
-
-              '''
-                  }
-                }
-            }
+  stage ("lint dockerfile") {
+    agent {
+        docker {
+            image 'hadolint/hadolint:latest-debian'
         }
+    }
+    steps {
+        sh 'hadolint dockerfiles/* | tee -a hadolint_lint.txt'
+    }
+    post {
+        always {
+            archiveArtifacts 'hadolint_lint.txt'
+        }
+    }
+}  
+    // stage('Lint Dockerfile'){
+    //   steps{
+    //     script{
+    //       docker.image('hadolint/hadolint:latest-debian').inside(){
+    //         sh 'hadolint ./Dockerfile | tee -a hadolint_lint.txt'
+    //         sh '''
+    //            lintErrors=$(stat --printf="%s"  hadolint_lint.txt)
+
+    //           '''
+    //               }
+    //             }
+    //         }
+    //     }
 
      stage('Upload to AWS'){
         steps{
