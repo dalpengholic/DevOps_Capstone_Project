@@ -18,16 +18,16 @@ pipeline{
     }
     steps {
         sh 'hadolint Dockerfile | tee -a hadolint_lint.txt'
-        sh '''
-        lintErrors=$(stat --printf="%s"  hadolint_lint.txt)
-        if [ "$lintErrors" -gt "0" ]; then
-        echo "Error"
-        cat hadolint_lint.txt
-        exit 1
-        else
-        echo "No error in Dockerfile!!"
-        fi
-    '''
+    //     sh '''
+    //     lintErrors=$(stat --printf="%s"  hadolint_lint.txt)
+    //     if [ "$lintErrors" -gt "0" ]; then
+    //     echo "Error"
+    //     cat hadolint_lint.txt
+    //     exit 1
+    //     else
+    //     echo "No error in Dockerfile!!"
+    //     fi
+    // '''
     }
 }  
     // stage('Lint Dockerfile'){
