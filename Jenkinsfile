@@ -55,8 +55,8 @@ pipeline{
       steps{
         script{
           docker.withRegistry( '', registryCredential) {
-            sh "docker push ${registry_brue}"
-            sh "docker push ${registry_green}"
+            sh "docker push ${registry_brue}:${docker_tag}"
+            sh "docker push ${registry_green}:${docker_tag}"
           }
         }
       }
