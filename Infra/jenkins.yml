@@ -57,6 +57,7 @@
             sudo apt-get update -y
             sudo apt-get install jenkins tidy -y
             sudo systemctl status jenkins
+            
         SecurityGroupIds:
           - Ref: CapstoneSG
         SubnetId:
