@@ -45,27 +45,40 @@ pipeline{
           '''
           }
         }
-    // stage('Build Docker Image'){
-    //   steps{
-    //     sh "docker build -f Blue/Dockerfile.blue Blue -t ${registry_brue}:${docker_tag}"
-    //     sh "docker build -f Green/Dockerfile.green Green -t ${registry_green}:${docker_tag}"
-    //   }
-    stage('Build & Push Docker Image'){
+    stage('Build Docker Image'){
+      steps{
+        sh "docker build -f Blue/Dockerfile.blue Blue -t ${registry_brue}:${docker_tag}"
+        sh "docker build -f Green/Dockerfile.green Green -t ${registry_green}:${docker_tag}"
+      }
+    stage('Push Docker Image'){
       steps{
         script{
-          def dockerBlue = 'Dockerfile.blue'
-          def dockerGreen = 'Dockerfile.green'
-          dockerBlueImage = docker.build("${registry_brue}:${docker_tag}", "-f ${dockerBlue} ./Blue")
-          docker.withRegistry('', registryCredential) {
-            dockerBlueImage.push()
-          dockerGreenImage = docker.build("${registry_green}:${docker_tag}", "-f ${dockerGreen} ./Green")
-          docker.withRegistry('', registryCredential) {
-            dockerGreenImage.push()
-            }
-          } 
+          docker.withRegistry( '', registryCredential) {
+            sh "docker push ${registry_brue}"
+            sh "docker push ${registry_green}"
+          }
         }
       }
-    }
+ 
+    }    
+
+
+    // stage('Build & Push Docker Image'){
+    //   steps{
+    //     script{
+    //       def dockerBlue = 'Dockerfile.blue'
+    //       def dockerGreen = 'Dockerfile.green'
+    //       dockerBlueImage = docker.build("${registry_brue}:${docker_tag}", "-f ${dockerBlue} ./Blue")
+    //       docker.withRegistry('', registryCredential) {
+    //         dockerBlueImage.push()
+    //       dockerGreenImage = docker.build("${registry_green}:${docker_tag}", "-f ${dockerGreen} ./Green")
+    //       docker.withRegistry('', registryCredential) {
+    //         dockerGreenImage.push()
+    //         }
+    //       } 
+    //     }
+    //   }
+    // }
   }
 }
 
