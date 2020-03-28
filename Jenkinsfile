@@ -50,6 +50,7 @@ pipeline{
         sh "docker build -f Blue/Dockerfile.blue Blue -t ${registry_brue}:${docker_tag}"
         sh "docker build -f Green/Dockerfile.green Green -t ${registry_green}:${docker_tag}"
       }
+    }
     stage('Push Docker Image'){
       steps{
         script{
@@ -59,9 +60,9 @@ pipeline{
           }
         }
       }
- 
-    }    
-
+    }
+  }    
+}
 
     // stage('Build & Push Docker Image'){
     //   steps{
@@ -79,8 +80,7 @@ pipeline{
     //     }
     //   }
     // }
-  }
-}
+  
 
 
 def getDockerTag() {  
