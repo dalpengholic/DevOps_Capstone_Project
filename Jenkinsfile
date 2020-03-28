@@ -42,15 +42,6 @@ pipeline{
     }
   }  
   }
-//      stage('Upload to AWS'){
-//         steps{
-//           withAWS(region:'us-west-2',credentials:'aws-static'){
-//             s3Upload(file:'index.html', bucket:'this-is-really-unique-name-bucket', path:'index.html')
-//           }
-//         }
-//      }
-//   }
-// }
 
 def getDockerTag(){
   def tag = sh script: 'git rev-parse --short=8 HEAD', returnStdout: true
