@@ -35,7 +35,6 @@ pipeline{
         '''
     }
   }
-
   stage('Build Docker Image'){
     steps{
       sh "docker build -t ${registry}:${docker_tag}"
@@ -43,7 +42,7 @@ pipeline{
   }  
 }
 
-def getDockerTag(){
+def getDockerTag() {
   def tag = sh script: 'git rev-parse --short=8 HEAD', returnStdout: true
   return tag
 }
