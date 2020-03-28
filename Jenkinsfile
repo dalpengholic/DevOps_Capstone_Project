@@ -46,8 +46,8 @@ pipeline{
         }
     stage('Build Docker Image'){
       steps{
-        sh "docker build -t ${registry_brue}:${docker_tag} -f Blue/Dockerfile.blue"
-        sh "docker build -t ${registry_green}:${docker_tag} -f Green/Dockerfile.green"
+        sh "docker build -f Blue/Dockerfile.blue -t ${registry_brue}:${docker_tag} "
+        sh "docker build -f Green/Dockerfile.green -t ${registry_green}:${docker_tag} "
       }
     }  
   }
