@@ -5,6 +5,7 @@ pipeline{
     registry_green = "dalpengholic/devops_capstone_green"
     registryCredential = 'dockerhub'
     docker_tag = getDockerTag()
+
   }
   stages{
     stage('Lint HTML'){
@@ -44,17 +45,29 @@ pipeline{
           '''
           }
         }
-    stage('Build Docker Image'){
+    // stage('Build Docker Image'){
+    //   steps{
+    //     sh "docker build -f Blue/Dockerfile.blue Blue -t ${registry_brue}:${docker_tag}"
+    //     sh "docker build -f Green/Dockerfile.green Green -t ${registry_green}:${docker_tag}"
+    //   }
+    stage('Build & Push Docker Image'){
       steps{
-        sh "docker build -f Blue/Dockerfile.blue Blue -t ${registry_brue}:${docker_tag}"
-        sh "docker build -f Green/Dockerfile.green Green -t ${registry_green}:${docker_tag}"
-      }
-    }  
+        script{
+          def dockerBlue = 'Dockerfile.blue'
+          def dockerGreen = 'Dockerfile.green'
+          dockerBlueImage = docker.build("${registry_brue}:${docker_tag}","-f ${dockerBlue} ./Blue")
+          docker.withRegistry('', registryCredential) {
+            dockerBlueImage.push()
+          dockerGreenImage = docker.build("${registry_green}:${docker_tag}","-f ${dockerGreen} ./Green")
+          docker.withRegistry('', registryCredential) {
+            dockerGreenImage.push()
+        }
+      } 
   }
 }
 
 
 def getDockerTag() {  
-  def tag = sh script: 'git rev-parse --short=8 HEAD', returnStdout: true
+  def tag = sh script: 'git rev-parse --short=7 HEAD', returnStdout: true
   return tag
   }
