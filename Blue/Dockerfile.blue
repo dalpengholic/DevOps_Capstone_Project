@@ -3,3 +3,5 @@ FROM nginx:stable
 RUN rm /usr/share/nginx/html/index.html
 
 COPY Blue/index.html /usr/share/nginx/html 
+
+EXPOSE 80
