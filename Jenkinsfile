@@ -1,4 +1,9 @@
 pipeline{
+  environment {
+    registry = "dalpengholic/DevOps_Capstone"
+    registryCredential = 'dockerhub'
+    docker_tag = getDockerTag()
+  }
   agent any
   stages{
     stage('Lint HTML'){
@@ -10,7 +15,7 @@ pipeline{
             sh 'tidy -q -e index.html'}
       }
     }
-  stage ("lint dockerfile") {
+  stage ("Lint Dockerfile") {
     agent {
         docker {
             image 'hadolint/hadolint:latest-debian'
@@ -29,16 +34,25 @@ pipeline{
             fi
         '''
     }
-}  
-
-
-     stage('Upload to AWS'){
-        steps{
-          withAWS(region:'us-west-2',credentials:'aws-static'){
-            s3Upload(file:'index.html', bucket:'this-is-really-unique-name-bucket', path:'index.html')
-          }
-        }
-     }
   }
-}
 
+  stage('Build Docker Image'){
+    steps{
+      sh "docker build -t ${registry}:${docker_tag}"
+    }
+  }  
+
+//      stage('Upload to AWS'){
+//         steps{
+//           withAWS(region:'us-west-2',credentials:'aws-static'){
+//             s3Upload(file:'index.html', bucket:'this-is-really-unique-name-bucket', path:'index.html')
+//           }
+//         }
+//      }
+//   }
+// }
+
+def getDockerTag(){
+  def tag = sh script: 'git rev-parse --short=8 HEAD', returnStdout: true
+  return tag
+}
