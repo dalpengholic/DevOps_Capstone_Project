@@ -14,9 +14,9 @@ pipeline{
             sh 'tidy -q -e Green/index.html'
       }
     }
-    stage ("Lint Dockerfile") {
-      agent {
-          docker {
+    stage("Lint Dockerfile"){
+      agent{
+          docker{
               image 'hadolint/hadolint:latest-debian'
           }
         }
@@ -61,8 +61,10 @@ pipeline{
           dockerGreenImage = docker.build("${registry_green}:${docker_tag}","-f ${dockerGreen} ./Green")
           docker.withRegistry('', registryCredential) {
             dockerGreenImage.push()
+            }
+          } 
         }
-      } 
+      }
     }
   }
 }
