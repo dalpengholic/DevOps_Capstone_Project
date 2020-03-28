@@ -55,10 +55,10 @@ pipeline{
         script{
           def dockerBlue = 'Dockerfile.blue'
           def dockerGreen = 'Dockerfile.green'
-          dockerBlueImage = docker.build("${registry_brue}:${docker_tag}","-f ${dockerBlue} ./Blue")
+          dockerBlueImage = docker.build("-f ${dockerBlue} .", "${registry_brue}:${docker_tag}")
           docker.withRegistry('', registryCredential) {
             dockerBlueImage.push()
-          dockerGreenImage = docker.build("${registry_green}:${docker_tag}","-f ${dockerGreen} ./Green")
+          dockerGreenImage = docker.build("-f ${dockerGreen} .", "${registry_green}:${docker_tag}")
           docker.withRegistry('', registryCredential) {
             dockerGreenImage.push()
             }
