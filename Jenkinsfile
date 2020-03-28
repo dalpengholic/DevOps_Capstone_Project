@@ -1,18 +1,16 @@
 pipeline{
   agent any
   environment {
-    registry = "dalpengholic/devops_capstone_project"
+    registry_brue = "dalpengholic/devops_capstone_blue"
+    registry_green = "dalpengholic/devops_capstone_green"
     registryCredential = 'dockerhub'
     docker_tag = getDockerTag()
   }
   stages{
     stage('Lint HTML'){
       steps{
-          dir('Blue'){
-            sh 'tidy -q -e index.html'
-		                 }
-          dir('Green'){
-            sh 'tidy -q -e index.html'}
+            sh 'tidy -q -e Blue/index.html'
+            sh 'tidy -q -e Green/index.html'
       }
     }
     stage ("Lint Dockerfile") {
@@ -22,7 +20,18 @@ pipeline{
           }
         }
       steps {
-          sh 'hadolint Dockerfile | tee -a hadolint_lint.txt'
+          sh 'hadolint /Blue/Dockerfile.blue | tee -a hadolint_lint.txt'
+          sh '''
+              lintErrors=$(stat --printf="%s"  hadolint_lint.txt)
+              if [ "$lintErrors" -gt "0" ]; then
+                  echo "Check Error"
+                  cat hadolint_lint.txt
+                  exit 1
+              else
+                  echo "No Error"
+              fi
+          '''
+          sh 'hadolint /Green/Dockerfile.green | tee -a hadolint_lint.txt'
           sh '''
               lintErrors=$(stat --printf="%s"  hadolint_lint.txt)
               if [ "$lintErrors" -gt "0" ]; then
@@ -37,7 +46,8 @@ pipeline{
         }
     stage('Build Docker Image'){
       steps{
-        sh "docker build . -t ${registry}:${docker_tag}"
+        sh "docker build -t ${registry_brue}:${docker_tag} -f Blue/Dockerfile.blue"
+        sh "docker build -t ${registry_green}:${docker_tag} -f Green/Dockerfile.green"
       }
     }  
   }
