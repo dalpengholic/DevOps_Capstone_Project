@@ -53,8 +53,8 @@ pipeline{
     stage('Build & Push Docker Image'){
       steps{
         script{
-          def dockerBlue = 'Dockerfile.blue'
-          def dockerGreen = 'Dockerfile.green'
+          def dockerBlue = 'Blue/Dockerfile.blue'
+          def dockerGreen = 'Green/Dockerfile.green'
           dockerBlueImage = docker.build("${registry_brue}:${docker_tag}","-f ${dockerBlue} Blue")
           docker.withRegistry('', registryCredential) {
             dockerBlueImage.push()
