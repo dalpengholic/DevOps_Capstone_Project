@@ -41,7 +41,7 @@ pipeline{
       sh "docker build -t ${registry}:${docker_tag}"
     }
   }  
-
+  }
 //      stage('Upload to AWS'){
 //         steps{
 //           withAWS(region:'us-west-2',credentials:'aws-static'){
