@@ -46,12 +46,13 @@ pipeline{
         }
     stage('Build Docker Image'){
       steps{
-        sh "docker build . -t ${registry_brue}:${docker_tag} -f Blue/Dockerfile.blue"
-        sh "docker build . -t ${registry_green}:${docker_tag} -f Green/Dockerfile.green"
+        sh "docker build -t ${registry_brue}:${docker_tag} -f Blue/Dockerfile.blue"
+        sh "docker build -t ${registry_green}:${docker_tag} -f Green/Dockerfile.green"
       }
     }  
   }
 }
+
 
 def getDockerTag() {  
   def tag = sh script: 'git rev-parse --short=8 HEAD', returnStdout: true
