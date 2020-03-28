@@ -1,7 +1,7 @@
 pipeline{
   agent any
   environment {
-    registry = "dalpengholic/DevOps_Capstone"
+    registry = "dalpengholic/devops_capstone_project"
     registryCredential = 'dockerhub'
     docker_tag = getDockerTag()
   }
