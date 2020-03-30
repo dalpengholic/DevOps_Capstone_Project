@@ -47,8 +47,8 @@ pipeline{
         }
     stage('Build Docker Image'){
       steps{
-        sh "docker build -f Blue/Dockerfile.blue Blue -t ${registry_brue}:${docker_tag} -t ${registry_brue}:latest"
-        sh "docker build -f Green/Dockerfile.green Green -t ${registry_green}:${docker_tag} -t ${registry_green}:latest"
+        sh "docker build -f Blue/Dockerfile.blue Blue -t ${registry_brue}:${docker_tag}"
+        sh "docker build -f Green/Dockerfile.green Green -t ${registry_green}:${docker_tag}"
       }
     }
     stage('Push Docker Image'){
@@ -56,8 +56,11 @@ pipeline{
         script{
           docker.withRegistry( '', registryCredential) {
             sh "docker push ${registry_brue}:${docker_tag}"
+            sh "docker tag ${registry_brue}:${docker_tag} ${registry_brue}:latest"
             sh "docker push ${registry_brue}:latest"
+            
             sh "docker push ${registry_green}:${docker_tag}"
+            sh "docker tag ${registry_green}:${docker_tag} ${registry_green}:latest"
             sh "docker push ${registry_green}:latest"
           }
         }
