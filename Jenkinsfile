@@ -56,11 +56,11 @@ pipeline{
         script{
           docker.withRegistry('', registryCredential) {
             sh "docker push ${registry_brue}:${docker_tag}"
-            sh "docker tag ${registry_brue}:${docker_tag} ${registry_brue}"
+            sh "docker tag ${registry_brue}:${docker_tag}\ ${registry_brue}"
             sh "docker push ${registry_brue}:latest"
 
             sh "docker push ${registry_green}:${docker_tag}"
-            sh "docker tag ${registry_green}:${docker_tag} ${registry_green}"
+            sh "docker tag ${registry_green}:${docker_tag}\ ${registry_green}"
             sh "docker push ${registry_green}:latest"
           }
         }
