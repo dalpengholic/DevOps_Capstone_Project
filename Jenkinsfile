@@ -64,6 +64,7 @@ pipeline{
         }
       }
     }
+    
     stage('Create EKS Node Stack'){
       steps{
         dir('Infra'){
