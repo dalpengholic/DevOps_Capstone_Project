@@ -56,7 +56,10 @@ pipeline{
           docker.withRegistry('', registryCredential) {
             sh "docker push ${registryBrue}:${dockertag}"
             sh "docker tag ${registryBrue}:${dockertag} ${registryBrue}:latest"
+            sh "docker push ${registryBrue}:latest"
             sh "docker push ${registryGreen}:${dockertag}"
+            sh "docker tag ${registryGreen}:${dockertag} ${registryGreen}:latest"
+            sh "docker push ${registryGreen}:latest"
           }
         }
       }
