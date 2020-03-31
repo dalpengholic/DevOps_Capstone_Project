@@ -1,10 +1,10 @@
 pipeline{
   agent any
   environment {
-    registry_brue = "dalpengholic/devops_capstone_blue"
-    registry_green = "dalpengholic/devops_capstone_green"
+    registryBrue = "dalpengholic/devops_capstone_blue"
+    registryGreen = "dalpengholic/devops_capstone_green"
     registryCredential = 'dockerhub'
-    docker_tag = getDockerTag()
+    dockertag = getDockerTag()
   }
   stages{
     stage('Lint HTML'){
@@ -46,17 +46,17 @@ pipeline{
         }
     stage('Build Docker Image'){
       steps{
-        sh "docker build -f Blue/Dockerfile.blue Blue -t ${registry_brue}:${docker_tag}"
-        sh "docker build -f Green/Dockerfile.green Green -t ${registry_green}:${docker_tag}"
+        sh "docker build -f Blue/Dockerfile.blue Blue -t ${registryBrue}:${dockertag}"
+        sh "docker build -f Green/Dockerfile.green Green -t ${registryGreen}:${dockertag}"
       }
     }
     stage('Push Docker Image'){
       steps{
         script{
           docker.withRegistry('', registryCredential) {
-            sh "docker push ${registry_brue}:${docker_tag}"
-            sh "echo docker tag ${registry_brue}:${docker_tag} ${registry_brue}:latest"
-            sh "docker push ${registry_green}:${docker_tag}"
+            sh "docker push ${registryBrue}:${dockertag}"
+            sh -c "docker tag ${registryBrue}:${dockertag} ${registryBrue}:latest"
+            sh "docker push ${registryGreen}:${dockertag}"
           }
         }
       }
@@ -64,7 +64,7 @@ pipeline{
     stage('Deploy to k8s'){
       steps{
         sh "chmod +x changeTag.sh"
-        sh "./changeTag.sh ${docker_tag}"
+        sh "./changeTag.sh ${dockertag}"
       }
     }
   }    
