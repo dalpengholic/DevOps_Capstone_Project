@@ -5,7 +5,6 @@ pipeline{
     registry_green = "dalpengholic/devops_capstone_green"
     registryCredential = 'dockerhub'
     docker_tag = getDockerTag()
-
   }
   stages{
     stage('Lint HTML'){
@@ -56,36 +55,20 @@ pipeline{
         script{
           docker.withRegistry('', registryCredential) {
             sh "docker push ${registry_brue}:${docker_tag}"
-            // sh "docker tag ${registry_brue}:${docker_tag}" "${registry_brue}:latest"
-            // sh "docker push ${registry_brue}:latest"
-
+            sh "echo docker tag ${registry_brue}:${docker_tag} ${registry_brue}:latest"
             sh "docker push ${registry_green}:${docker_tag}"
-            // sh "docker tag ${registry_green}:${docker_tag}" "${registry_green}:latest"
-            // sh "docker push ${registry_green}:latest"
           }
         }
       }
     }
+    stage('Deploy to k8s'){
+      steps{
+        sh "chmod +x changeTag.sh"
+        sh "./changeTag.sh ${docker_tag}"
+      }
+    }
   }    
 }
-
-    // stage('Build & Push Docker Image'){
-    //   steps{
-    //     script{
-    //       def dockerBlue = 'Dockerfile.blue'
-    //       def dockerGreen = 'Dockerfile.green'
-    //       dockerBlueImage = docker.build("${registry_brue}:${docker_tag}", "-f ${dockerBlue} ./Blue")
-    //       docker.withRegistry('', registryCredential) {
-    //         dockerBlueImage.push()
-    //       dockerGreenImage = docker.build("${registry_green}:${docker_tag}", "-f ${dockerGreen} ./Green")
-    //       docker.withRegistry('', registryCredential) {
-    //         dockerGreenImage.push()
-    //         }
-    //       } 
-    //     }
-    //   }
-    // }
-  
 
 
 def getDockerTag() {  
