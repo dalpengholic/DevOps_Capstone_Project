@@ -55,7 +55,7 @@ pipeline{
         script{
           docker.withRegistry('', registryCredential) {
             sh "docker push ${registryBrue}:${dockertag}"
-            sh -c "docker tag ${registryBrue}:${dockertag} ${registryBrue}:latest"
+            sh "docker tag ${registryBrue}:${dockertag} ${registryBrue}:latest"
             sh "docker push ${registryGreen}:${dockertag}"
           }
         }
@@ -73,5 +73,5 @@ pipeline{
 
 def getDockerTag() {  
   def tag = sh script: 'git rev-parse --short=7 HEAD', returnStdout: true
-  return tag | tr -d '\n' 
+  return tag.trim()
   }
