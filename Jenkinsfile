@@ -68,7 +68,7 @@ pipeline{
       steps{
         dir('Infra'){
           withAWS(credentials: 'aws-creds', region: 'us-west-2'){
-            sh './create.sh CapstoneNodes CapstoneNodes.yml'
+            sh "./create.sh CapstoneNodes CapstoneNodes.yml"
           }
         }
       }
@@ -76,7 +76,7 @@ pipeline{
     stage('Update Kubeconfig'){
       steps{
         withAWS(credentials: 'aws-creds', region: 'us-west-2') {
-          sh 'aws eks --region us-west-2 update-kubeconfig --name CapstoneNodes'
+          sh "aws eks --region us-west-2 update-kubeconfig --name CapstoneNodes"
         }
       }
     }
