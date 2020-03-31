@@ -64,11 +64,12 @@ pipeline{
         }
       }
     }
-    
+
     stage('Create EKS Node Stack'){
       steps{
         dir('Infra'){
           withAWS(credentials: 'aws-creds', region: 'us-west-2'){
+            sh "chmod +x ./create.sh"
             sh "./create.sh CapstoneNodes CapstoneNodes.yml"
           }
         }
