@@ -64,12 +64,24 @@ pipeline{
         }
       }
     }
-    stage('Deploy to k8s'){
+    stage('Create EKS Node Stack'){
       steps{
-        sh "chmod +x changeTag.sh"
-        sh "./changeTag.sh ${dockertag}"
+        dir('Infra'){
+          withAWS(credentials: 'aws-creds', region: 'us-west-2'){
+            sh './create.sh CapstoneNodes CapstoneNodes.yml'
+          }
+        }
       }
     }
+    stage('Update Kubeconfig'){
+      steps{
+        withAWS(credentials: 'aws-creds', region: 'us-west-2') {
+          sh 'aws eks --region us-west-2 update-kubeconfig --name CapstoneNodes'
+        }
+      }
+    }
+
+
   }    
 }
 
