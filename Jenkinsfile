@@ -73,7 +73,6 @@ pipeline{
           sh "kubectl apply -f myapp-green.yml"
         }
       }
-      
     }
   }    
 }
