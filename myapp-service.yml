@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     app: myapp
-    version: blue
+    version: green
   ports:
   - protocol: TCP
     port: 80
