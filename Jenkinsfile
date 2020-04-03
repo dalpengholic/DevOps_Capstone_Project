@@ -68,6 +68,7 @@ pipeline{
     stage('Deploying to EKS'){
       steps{
         withAWS(credentials: 'aws-creds', region: 'us-west-2') {
+          sh "aws eks --region us-west-2 update-kubeconfig --name Capstone"
           sh "kubectl apply -f myapp-blue.yml"
           sh "kubectl apply -f myapp-green.yml"
         }
