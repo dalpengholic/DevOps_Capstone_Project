@@ -8,8 +8,8 @@ spec:
   replicas: 2
   selector:
       matchLabels:
-          app: myapp
-          version: green
+        app: myapp
+        version: green
   template:
     metadata:
       labels:
