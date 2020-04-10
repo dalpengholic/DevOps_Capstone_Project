@@ -25,20 +25,18 @@ This is the captone project of Cloud DevOps Engineer Nanodegree Program by Udaci
 <a name="project_requirement"></a>
 ## Project Requirement
 - EC2 instance (us-west-2)
-  - Ubuntu Server 18.04 LTS (HVM), more than t2.small, Auto-assign Public IP enable, everything goes defualt value except User data
-  - in User data type below to install `Jenkins`, `tidy` and `docker`.
-  ```
-  #!/bin/bash
-  sudo apt-get update -y
-  sudo apt-get install default-jdk wget -y
-  cd /home/ubuntu
-  wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
-  sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-  sudo apt-get update -y
-  sudo apt-get install jenkins tidy -y
-  sudo systemctl status jenkins
-  curl -fsSL https://get.docker.com -o get-docker.sh
-  sudo sh get-docker.sh
-  ```
+  - Ubuntu Server 18.04 LTS (HVM), more than t2.small
+  - Jenkins
+  - Docker
+  - tidy
+  - Python3
+  - AWS CLI
+  - kubectl
+  - EKS  
+- CloudFormation (console or AWS CLI)
+  - CapstoneInfra.yml
+  - CapstoneNodes.yml
+- 
+  
 
 
