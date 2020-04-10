@@ -20,11 +20,12 @@ This is the captone project of Cloud DevOps Engineer Nanodegree Program by Udaci
 1. Create an EC2 instance as a Jenkins master box to create CI/CD pipeline
 2. Implement CloudFormation to deploy a kubernetes cluster
 3. Deploy blue and green websites in AWS EKS using kubectl
+4. Edit `myapp-service.yml` and apply it
 
 <a name="project_requirement"></a>
 ## Project Requirement
 - EC2 instance (us-west-2)
-  - Ubuntu Server 18.04 LTS (HVM), more than t2.small, everything goes defualt value except User data
+  - Ubuntu Server 18.04 LTS (HVM), more than t2.small, Auto-assign Public IP enable, everything goes defualt value except User data
   - in User data type below to install `Jenkins`, `tidy` and `docker`.
   ```
   #!/bin/bash
