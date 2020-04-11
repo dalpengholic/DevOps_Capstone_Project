@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'Cloud DevOps Nanodegree Capstone EKS Nodes'
+Mappings:
+  ServicePrincipalPartitionMap:
+    aws:
+      EC2: ec2.amazonaws.com
+      EKS: eks.amazonaws.com
+      EKSFargatePods: eks-fargate-pods.amazonaws.com
+    aws-cn:
+      EC2: ec2.amazonaws.com.cn
+      EKS: eks.amazonaws.com
+      EKSFargatePods: eks-fargate-pods.amazonaws.com
+Resources:
+  ManagedNodeGroup:
+    Type: 'AWS::EKS::Nodegroup'
+    Properties:
+      ClusterName: Capstone
+      NodegroupName: workers
+      ScalingConfig:
+        MinSize: 1
+        MaxSize: 4
+        DesiredSize: 3
+      Subnets: !Split 
+        - ','
+        - Fn::ImportValue: !Sub 'Capstone::SubnetsPublic'
+      InstanceTypes:
+        - t2.medium
+      AmiType: AL2_x86_64
+      RemoteAccess:
+        Ec2SshKey: >-
+          NodeKeys
+      NodeRole: !GetAtt NodeInstanceRole.Arn
+      Labels:
+        alpha.eksctl.io/cluster-name: Capstone
+        alpha.eksctl.io/nodegroup-name: workers
+      Tags:
+        alpha.eksctl.io/nodegroup-name: workers
+        alpha.eksctl.io/nodegroup-type: managed
+  NodeInstanceRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Effect: Allow
+            Principal:
+              Service:
+                - !FindInMap 
+                  - ServicePrincipalPartitionMap
+                  - !Ref 'AWS::Partition'
+                  - EC2
+        Version: 2012-10-17
+      ManagedPolicyArns:
+        - !Sub >-
+          arn:${AWS::Partition}:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/AmazonEKSWorkerNodePolicy'
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/AmazonEKS_CNI_Policy'
+      Path: /

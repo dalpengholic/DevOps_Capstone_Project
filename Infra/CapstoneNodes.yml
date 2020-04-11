@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Amazon EKS - Node Group'
+Description: 'Cloud DevOps Nanodegree Capstone EKS'
 
 Parameters:
 
