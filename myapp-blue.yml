@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: docker.io/dalpengholic/devops_capstone_green
+          image: docker.io/dalpengholic/devops_capstone_blue
           imagePullPolicy: Always
           ports:
             - containerPort: 80
