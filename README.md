@@ -50,7 +50,7 @@ This is the captone project of Cloud DevOps Engineer Nanodegree Program by Udaci
 │   └── 0410-CapstoneEKSNodes.yml
 ├── Jenkinsfile
 ├── README.md
-├── image
+├── images
 │   ├── 1_1_Launch_EC2_Instance(Userdata).png
 │   ├── 1_2_Launch_EC2_Instance(SG).png
 │   ├── 1_3_Launch_EC2_Instance(SSH).png
