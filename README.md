@@ -89,3 +89,5 @@ This is the captone project of Cloud DevOps Engineer Nanodegree Program by Udaci
 
 <a name="results"></a>
 ## Results
+![BlueDeployment](https://github.com/dalpengholic/DevOps_Capstone_Project/blob/master/images/5_4_Deployment(Blue).png)
+![GreenDeployment](https://github.com/dalpengholic/DevOps_Capstone_Project/blob/master/images/5_5_Deployment(Green).png)
