@@ -13,7 +13,7 @@
 
 <a name="about_the_project"></a>
 ## About the Project
-This is the captone project of Cloud DevOps Engineer Nanodegree Program by Udacity. The goal of the project is to create Jenkins pipeline to do blue/green deployment for a simple website deployed in AWS EKS. 
+This is the captone project of Cloud DevOps Engineer Nanodegree Program by Udacity. The goal of the project is to create a Jenkins pipeline to do blue/green deployment for a simple website deployed in AWS EKS. 
 
 <a name="general_steps"></a>
 ## General Steps
