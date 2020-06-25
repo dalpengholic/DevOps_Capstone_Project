@@ -94,4 +94,4 @@ This is the captone project of Cloud DevOps Engineer Nanodegree Program by Udaci
 
 <a name="license"></a>
 ## LICENSE
-[LICENSE]https://github.com/dalpengholic/DevOps_Capstone_Project/blob/master/LICENSE
+[LICENSE](https://github.com/dalpengholic/DevOps_Capstone_Project/blob/master/LICENSE)
